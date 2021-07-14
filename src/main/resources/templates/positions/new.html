@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/tables.css}">
+    <title>New Position</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header">
+
+</div>
+<div th:id="body">
+    <div class="center">
+        <div class="right">
+            <a th:href="@{/positions}">Back</a>
+        </div>
+        <form th:method="POST" th:action="@{/positions/new}" th:object="${position}">
+            <table th:class="table">
+                <thead>
+                <tr>
+                    <th data-priority="1" th:width="150">Parameter</th>
+                    <th data-priority="2" th:width="300">Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Instrument</td>
+                    <td>
+                        <input list="allInstruments" th:field="*{instrument}">
+                        <datalist id="allInstruments">
+                            <option th:each="t : ${tickers.keySet()}"
+                                    th:value="${t}" th:label="${tickers.get(t).getName()}">
+                        </datalist>
+                        <div style="color: red" th:if="${#fields.hasErrors('instrument')}" th:errors="*{instrument}">
+                            error zone
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    <td>
+                        <select th:field="*{status}">
+                            <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}"
+                                    th:selected="${s==status}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>priceToBuy</td>
+                    <td>
+                        <input type="text" th:field="*{priceToBuy}" id="priceToBuy"/>
+                        <div style="color: red" th:if="${#fields.hasErrors('priceToBuy')}" th:errors="*{priceToBuy}">
+                            error zone
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>priceSL</td>
+                    <td>
+                        <input type="text" th:field="*{priceSL}" id="priceSL"/>
+                        <div style="color: red" th:if="${#fields.hasErrors('priceSL')}" th:errors="*{priceSL}">
+                            error zone
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>quantity</td>
+                    <td><input type="text" th:field="*{quantity}" id="quantity" disabled="true" th:value="0"/></td>
+                </tr>
+                <tr>
+                    <td>maxPosition</td>
+                    <td>
+                        <input type="text" th:field="*{maxPosition}" id="maxPosition"/>
+                        <div style="color: red" th:if="${#fields.hasErrors('maxPosition')}" th:errors="*{maxPosition}">
+                            error zone
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>buyStrategy</td>
+                    <td>
+                        <select th:field="*{buyStrategy}" th:size="3" th:multiple="multiple">
+                            <option th:each="s : ${buyStrats}" th:value="${s}" th:text="${s}"></option>
+                        </select>
+                        <div style="color: red" th:if="${#fields.hasErrors('buyStrategy')}" th:errors="*{buyStrategy}">
+                            error zone
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>sellStrategy</td>
+                    <td>
+                        <select th:field="*{sellStrategy}" th:size="3" th:multiple="multiple">
+                            <option th:each="s : ${sellStrats}" th:value="${s}" th:text="${s}"></option>
+                        </select>
+                        <div style="color: red" th:if="${#fields.hasErrors('sellStrategy')}" th:errors="*{sellStrategy}">
+                            error zone
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Restart</td>
+                    <td><input type="checkbox" th:field="*{restart}" id="restart"/></td>
+                </tr>
+                <tr>
+                    <td>Virtual</td>
+                    <td><input type="checkbox" th:field="*{virtual}" id="virtual"/></td>
+                </tr>
+                </tbody>
+            </table>
+            <input type="submit" value="Create"/>
+        </form>
+    </div>
+</div>
+</body>

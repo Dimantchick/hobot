@@ -1,0 +1,15 @@
+ru.tinkoff.invest.openapi.host = https://api-invest.tinkoff.ru/openapi/
+ru.tinkoff.invest.openapi.host-sandbox = https://api-invest.tinkoff.ru/openapi/sandbox/
+ru.tinkoff.invest.openapi.streaming = wss://api-invest.tinkoff.ru/openapi/md/v1/md-openapi/ws
+ru.tinkoff.invest.openapi.streaming-parallelism = 0
+
+# Тинькофф токен получать в самом низу страницы https://www.tinkoff.ru/invest/settings/
+tk.dimantchick.hobot.token =
+# По ссылке https://www.tinkoff.ru/invest/portfolio/ выберите счет
+# из полученной ссылки https://www.tinkoff.ru/invest/portfolio/1234567/
+# 1234567 и будет ваш аккаунт. Пока поддерживается только основной счет
+tk.dimantchick.hobot.account =
+# Пользователь для робота
+tk.dimantchick.hobot.user =
+# Пароль для робота
+tk.dimantchick.hobot.password =

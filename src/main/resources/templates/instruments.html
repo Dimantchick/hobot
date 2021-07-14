@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/tables.css}">
+    <script th:src="@{/scripts/pages.js}"></script>
+    <style>
+        .ticker {
+            width: 60px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .name {
+            width: 200px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .figi {
+            width: 120px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .currency {
+            width: 60px;
+            vertical-align: top;
+        }
+        .status {
+            width: 90px;
+            vertical-align: top;
+        }
+        .action {
+            width: 50px;
+            vertical-align: top;
+        }
+    </style>
+    <title>Instruments</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header">
+
+</div>
+<div th:id="body">
+    <div class="center">
+        <form name="filter" id="filter" th:method="get" th:action="@{/instruments}" th:object="${filter}">
+            <table th:class="table">
+                <thead>
+                <tr>
+                    <!--<th data-priority="1">Id</th>-->
+                    <th data-priority="1">Ticker</th>
+                    <th data-priority="2">Name</th>
+                    <th data-priority="3">Figi</th>
+                    <th data-priority="4">Currency</th>
+                    <th data-priority="5">Status</th>
+                    <th data-priority="6">Action</th>
+                    <!--            <th data-priority="7">Disable</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="ticker"><input type="text" th:size="1" th:field="*{ticker}" class="ticker"></td>
+                    <td class="name"><input type="text" th:size="10" th:field="*{name}" class="name"></td>
+                    <td class="figi"><input type="text" th:size="7" th:field="*{figi}" class="figi"></td>
+                    <td class="currency">
+                        <select th:field="*{currency}" class="currency">
+                            <option value=""
+                                    th:selected="${filter.isWithoutCurrency()}">All</option>
+                            <option th:each="c : ${currencies}" th:value="${c}" th:text="${c}"
+                                    th:selected="${filter.getCurrency() == c}"></option>
+                        </select>
+                    </td>
+                    <td class="status">
+                        <select th:field="*{status}" class="status">
+                            <option value=""
+                                    th:selected="${filter.isWithoutStatus()}">All</option>
+                            <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}"
+                                    th:selected="${filter.getStatus() == s}"></option>
+                        </select>
+                    </td>
+                    <td class="action"><input type="submit" th:value="Filter" class="action"></td>
+                </tr>
+                <tr th:each="instrument : ${instruments}">
+                    <!--<td th:text="${instrument.getId()}"></td>-->
+                    <td th:text="${instrument.getTicker()}" class="ticker"></td>
+                    <td th:text="${instrument.getName()}" class="name"></td>
+                    <td th:text="${instrument.getFigi()}" class="figi"></td>
+                    <td th:text="${instrument.getCurrency()}" class="currency"></td>
+                    <td th:text="${instrument.getStatus()}" class="status"></td>
+                    <td th:if="${instrument.getStatus()} == ${disabled}" class="action"><a
+                            th:href="@{/instruments/{id}/ENABLE(id=${instrument.getTicker()})}">Enable</a></td>
+                    <td th:if="${instrument.getStatus()} == ${enabled}" class="action"><a
+                            th:href="@{/instruments/{id}/DISABLE(id=${instrument.getTicker()})}">Disable</a></td>
+                </tr>
+                </tbody>
+            </table>
+            Страница:<br/>
+            <input type="button" value="&lt;&lt;" id="prev" onclick="prevPage()">&nbsp;&nbsp;&nbsp;
+            <input type="text" th:size="1" th:field="*{page}">
+            <input type="submit" th:value="Go">&nbsp;&nbsp;&nbsp;
+            <input type="button" value="&gt;&gt;" id="next" onclick="nextPage()"><br/>
+            <div th:text="'Всего: ' + ${pages}"></div>
+        </form>
+        <input type="hidden" id="maxPage" th:value="${pages}">
+    </div>
+</div>
+</body>

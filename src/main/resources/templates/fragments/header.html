@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+</head>
+<body>
+<div th:id="header" th:fragment="header">
+    <table th:id="header_table" th:height="50" th:bgcolor="bab9ff">
+        <tr>
+            <td th:width="60">
+                <img th:src="@{/images/hobot_mini.png}"/>
+            </td>
+            <td>
+                <div th:text="'Balance: ' + ${balance}"></div>
+                <div class="top-menu">
+                    <ul>
+                        <li><a th:href="@{/}">DASHBOARD</a></li>
+                        <li><a th:href="@{/instruments}">INSTRUMENTS</a></li>
+                        <li><a th:href="@{/positions}">POSITIONS</a></li>
+                    </ul>
+                </div>
+            </td>
+            <td th:align="right">
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Sign Out"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+
+</div>
+</body>
+</html>

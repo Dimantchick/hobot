@@ -1,0 +1,50 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+#header {
+    width: 100%;
+}
+#header_table {
+    width: 100%;
+}
+#body {
+    text-align: center;
+    padding: 8px;
+}
+.center {
+    margin: auto;
+    display: inline-block;
+}
+.right {
+    text-align: right;
+    display: inline-block;
+    width: 100%;
+}
+
+.top-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-top: 4px;
+}
+.top-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.top-menu li{
+    list-style:none;/*Убираем маркер*/
+    display:inline-block;/*Выстраиваем пункты в ряд*/
+    background:#ccc;/*Цвет фона для пункта*/
+    position:relative;
+}
+.top-menu li:hover{
+    background:#eee;/*Цвет фона при наведение на пункт*/
+}
+.top-menu li a{
+    color:#222;/*Цвет шрифта в пункте*/
+    padding:5px 7px;/*Отступы для пункта*/
+    text-decoration:none;/*Убираем подчеркивание*/
+    display:block;
+}

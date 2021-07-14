@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/tables.css}">
+    <title>Position</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header">
+
+</div>
+<div th:id="body">
+    <div class="center">
+        <div class="right">
+            <a th:href="@{/positions}">all</a> | <a th:href="@{/positions/{id}/edit(id=${position.getId()})}">edit</a>
+        </div>
+        <table th:class="table">
+            <thead>
+            <tr>
+                <th data-priority="1">Parameter</th>
+                <th data-priority="2">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Id</td>
+                <td th:text="${position.getId()}"></td>
+            </tr>
+            <tr>
+                <td>Instrument</td>
+                <td th:text="${position.getInstrument().getTicker()}"></td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td th:text="${position.getStatus()}"></td>
+            </tr>
+            <tr>
+                <td>priceToBuy</td>
+                <td th:text="${position.getPriceToBuy()}"></td>
+            </tr>
+            <tr>
+                <td>priceSL</td>
+                <td th:text="${position.getPriceSL()}"></td>
+            </tr>
+            <tr>
+                <td>quantity</td>
+                <td th:text="${position.getQuantity()}"></td>
+            </tr>
+            <tr>
+                <td>maxPosition</td>
+                <td th:text="${position.getMaxPosition()}"></td>
+            </tr>
+            <tr>
+                <td>readyToBuyTime</td>
+                <td th:text="${position.getReadyToBuyTime()}"></td>
+            </tr>
+            <tr>
+                <td>buyStrategy</td>
+                <td><p th:each="name : ${position.getBuyStrategy()}" th:text="${name}"></p></td>
+            </tr>
+            <tr>
+                <td>sellStrategy</td>
+                <td><p th:each="name : ${position.getSellStrategy()}" th:text="${name}"></p></td>
+            </tr>
+            <tr>
+                <td>Restart</td>
+                <td th:text="${position.isRestart()}"></td>
+            </tr>
+            <tr>
+                <td>Virtual</td>
+                <td th:text="${position.isVirtual()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>

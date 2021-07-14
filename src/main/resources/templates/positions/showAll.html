@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/tables.css}">
+    <title>Positions</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header">
+
+</div>
+<div th:id="body">
+    <div class="center">
+        <div class="right">
+            <a th:href="@{/positions/new}">New</a>
+        </div>
+        <table th:class="table">
+            <thead>
+            <tr>
+                <th data-priority="1">Id</th>
+                <th data-priority="2">Ticker</th>
+                <th data-priority="3">Status</th>
+                <th data-priority="4">priceToBuy</th>
+                <th data-priority="5">priceSL</th>
+                <th data-priority="6">averageBuyPrice</th>
+                <th data-priority="7">averageSellPrice</th>
+                <th data-priority="8">averageProfit</th>
+                <th data-priority="9">quantity</th>
+                <th data-priority="10">maxPosition</th>
+                <th data-priority="11">Virt</th>
+                <th data-priority="12">actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="position : ${positions}">
+                <td th:text="${position.getId()}"></td>
+                <td th:text="${position.getInstrument().getTicker()}"></td>
+                <td th:text="${position.getStatus()}"></td>
+                <td th:text="${position.getPriceToBuy()}"></td>
+                <td th:text="${position.getPriceSL()}"></td>
+                <td th:text="${position.getAverageBuyPrice()}"></td>
+                <td th:text="${position.getAverageSellPrice()}"></td>
+                <td th:text="${position.getAverageProfit()}"></td>
+                <td th:text="${position.getQuantity()}"></td>
+                <td th:text="${position.getMaxPosition()}"></td>
+                <td th:if="${position.isVirtual()}">+</td>
+                <td th:if="${position.isVirtual() == false}">-</td>
+                <td><a th:href="@{/positions/{id}(id=${position.getId()})}">view</a> | <a th:href="@{/positions/{id}/edit(id=${position.getId()})}">edit</a> | <a th:href="@{/positions/{id}/delete(id=${position.getId()})}" onClick="return window.confirm('Вы уверены?');">delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>

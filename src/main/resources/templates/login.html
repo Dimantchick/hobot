@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Hobot</title>
+    <style>
+        html, body {
+            height: 100%; /* required to make body occupy the full viewport by default */
+            color: #000045;
+        }
+
+        #container {
+            height: 100%;
+            display: flex;
+            align-items: center; /* horizontal */
+            justify-content: center; /* vertical */
+        }
+
+        .error_text {
+            color: #450000;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <table th:bgcolor="bab9ff">
+        <tr>
+            <td th:align="center">
+                <img th:src="@{/images/hobot_small.png}"/>
+            </td>
+        </tr>
+        <tr th:if="${param.error}">
+            <td th:align="center">
+                <div th:class="error_text">
+                    Invalid username and password.
+                </div>
+            </td>
+        </tr>
+        <tr th:if="${param.logout}">
+            <td th:align="center">
+                <div th:class="error_text">
+                    You have been logged out.
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td th:align="center">
+                <form th:action="@{/login}" method="post">
+                    <table>
+                        <tr>
+                            <td th:align="right">User :</td>
+                            <td th:align="left"><input type="text" name="username"/></td>
+                        </tr>
+                        <tr>
+                            <td th:align="right">Password:</td>
+                            <td th:align="left"><input type="password" name="password"/></td>
+                        </tr>
+                    </table>
+                    <div><input type="submit" value="Sign In"/></div>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
