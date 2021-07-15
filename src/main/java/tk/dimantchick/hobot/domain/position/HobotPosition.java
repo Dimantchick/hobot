@@ -15,10 +15,14 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Позиция для робота.
+ */
 @Entity
 public class HobotPosition {
 
@@ -60,7 +64,6 @@ public class HobotPosition {
 
     public BigDecimal getAverageBuyPrice() {
         BigDecimal sum = BigDecimal.ZERO;
-        //System.out.println("Operations " + operations.size());
         int num = 0;
         for (HobotOperation operation : operations) {
             if (operation.getOperationType() == OperationTypeWithCommission.BUY) {
@@ -68,8 +71,7 @@ public class HobotPosition {
                 num += operation.getQuantityExecuted();
             }
         }
-        //System.out.println(sum + " " + num);
-        return num > 0 ? sum.divide(BigDecimal.valueOf(num)) : BigDecimal.ZERO;
+        return num > 0 ? sum.divide(BigDecimal.valueOf(num), RoundingMode.HALF_DOWN) : BigDecimal.ZERO;
     }
 
     public BigDecimal getAverageSellPrice() {
@@ -81,19 +83,16 @@ public class HobotPosition {
                 num += operation.getQuantityExecuted();
             }
         }
-        return num > 0 ? sum.divide(BigDecimal.valueOf(num)) : BigDecimal.ZERO;
+        return num > 0 ? sum.divide(BigDecimal.valueOf(num), RoundingMode.HALF_DOWN) : BigDecimal.ZERO;
     }
 
     public BigDecimal getAverageProfit() {
         BigDecimal sum = BigDecimal.ZERO;
-        //int num = 0;
         for (HobotOperation operation : operations) {
             if (operation.getOperationType() == OperationTypeWithCommission.BUY) {
                 sum = sum.subtract(operation.getPrice()).add(operation.getCommission());
-                //num += operation.getQuantityExecuted();
             } else if (operation.getOperationType() == OperationTypeWithCommission.SELL) {
                 sum = sum.add(operation.getPrice()).add(operation.getCommission());
-                //num -= operation.getQuantityExecuted();
             }
         }
         if (quantity > 0) {
@@ -224,9 +223,6 @@ public class HobotPosition {
     public void setVirtual(boolean virtual) {
         this.virtual = virtual;
     }
-/*public String getTicker() {
-        return instrument != null ? instrument.getTicker() : "";
-    }*/
 
     @Override
     public String toString() {

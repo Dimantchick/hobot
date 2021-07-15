@@ -1,6 +1,5 @@
 package tk.dimantchick.hobot.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,19 +7,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.tinkoff.invest.openapi.model.rest.Currency;
 import tk.dimantchick.hobot.api.Api;
-import tk.dimantchick.hobot.service.StrategiesService;
 
 import java.math.BigDecimal;
 
+/**
+ * Контроллер,отвечающий за информационные страниц.
+ */
 @Controller
 @RequestMapping("/")
 public class MainController {
 
-    @Autowired
-    private Api api;
+    private final Api api;
 
-    @Autowired
-    private StrategiesService strategiesService;
+    public MainController(Api api) {
+        this.api = api;
+    }
 
     @GetMapping("/")
     public String showHome(Model model) {
@@ -29,14 +30,7 @@ public class MainController {
 
     @GetMapping("/dashboard")
     public String showDashboard(Model model) {
-//        model.addAttribute("balance", api.getCurrency(Currency.USD).getBalance());
-//        model.addAttribute("buyStrategies", strategiesService.getBuyStrategies().keySet());
         return "dashboard";
-    }
-
-    @GetMapping("/hello")
-    public String showHello(Model model) {
-        return "hello";
     }
 
     @ModelAttribute("balance")

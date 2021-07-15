@@ -14,9 +14,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "INSTRUMENTS")
 public class Instrument {
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;*/
+
     private String figi;
     @Id
     private String ticker;
@@ -37,12 +35,10 @@ public class Instrument {
     @OrderBy("time DESC")
     private List<CandleHour> lastHourCandles;
 
-
     public Instrument() {
     }
 
     public Instrument(String figi, String ticker, Currency currency, InstrumentStatus status) {
-        //this.id = id;
         this.figi = figi;
         this.ticker = ticker;
         this.currency = currency;
@@ -84,7 +80,6 @@ public class Instrument {
     @Override
     public String toString() {
         return "Instrument{" +
-                //"id=" + id +
                 ", figi='" + figi + '\'' +
                 ", ticker='" + ticker + '\'' +
                 ", currency=" + currency +

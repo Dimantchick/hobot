@@ -7,6 +7,10 @@ import tk.dimantchick.hobot.domain.position.HobotPosition;
 
 import java.math.BigDecimal;
 
+/**
+ * Стратегия.
+ * ToDo описание алгоритма.
+ */
 @Component
 public class BuyAt5minReverse implements BuyStrategy {
     @Override

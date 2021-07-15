@@ -3,7 +3,6 @@ package tk.dimantchick.hobot.service;
 import org.apache.commons.collections4.list.TreeList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.invest.openapi.model.rest.Operation;
@@ -17,19 +16,26 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * Сервис, постоянно получающий операции по активным инструментам.
+ */
 @Service
 public class OperationsService {
 
     private Logger logger = LoggerFactory.getLogger(OperationsService.class);
 
-    @Autowired
-    private Api api;
+    private final Api api;
 
-    @Autowired
-    private InstrumentsService instrumentsService;
+    private final InstrumentsService instrumentsService;
 
-    @Autowired
-    private OperationsRepository operationsRepository;
+    private final OperationsRepository operationsRepository;
+
+    public OperationsService(Api api, InstrumentsService instrumentsService, OperationsRepository operationsRepository) {
+        this.api = api;
+        this.instrumentsService = instrumentsService;
+        this.operationsRepository = operationsRepository;
+    }
 
     @Transactional
     public void updateOperations() {

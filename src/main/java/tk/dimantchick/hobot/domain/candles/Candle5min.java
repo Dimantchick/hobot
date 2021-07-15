@@ -9,6 +9,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.OffsetDateTime;
 
+/**
+ * Свеча интервал 5 минут.
+ */
 @Entity
 @Table(name = "CANDLES_5MIN")
 public class Candle5min {
@@ -55,8 +58,8 @@ public class Candle5min {
         this.highestPrice = candle.getH();
         this.instrument = instrument;
         this.volume = candle.getV();
-        HAopenPrice = (last.HAopenPrice.add(last.HAclosePrice)).divide(new BigDecimal(2)).setScale(10, RoundingMode.HALF_UP);
-        HAclosePrice = (openPrice.add(closePrice).add(lowestPrice).add(highestPrice)).divide(new BigDecimal(4));
+        HAopenPrice = (last.HAopenPrice.add(last.HAclosePrice)).divide(new BigDecimal(2), RoundingMode.HALF_DOWN).setScale(10, RoundingMode.HALF_UP);
+        HAclosePrice = (openPrice.add(closePrice).add(lowestPrice).add(highestPrice)).divide(new BigDecimal(4), RoundingMode.HALF_DOWN);
         HAlowestPrice = lowestPrice.min(HAopenPrice).min(HAclosePrice);
         HAhighestPrice = highestPrice.max(HAopenPrice).max(HAclosePrice);
         this.resolution = candle.getInterval();

@@ -10,6 +10,9 @@ import tk.dimantchick.hobot.domain.instrument.Instrument;
 
 import java.time.OffsetDateTime;
 
+/**
+ * Репозиторий часовых свечей.
+ */
 @Repository
 public interface CandlesHourRepository extends CrudRepository<CandleHour, Long> {
 

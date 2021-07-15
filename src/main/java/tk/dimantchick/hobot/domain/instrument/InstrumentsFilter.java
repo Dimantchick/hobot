@@ -2,6 +2,9 @@ package tk.dimantchick.hobot.domain.instrument;
 
 import ru.tinkoff.invest.openapi.model.rest.Currency;
 
+/**
+ * Фильтр для отбора инструментов.
+ */
 public class InstrumentsFilter {
 
     private int page = 1;

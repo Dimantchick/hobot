@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
-import tk.dimantchick.hobot.api.Api;
 import tk.dimantchick.hobot.strategies.BuyStrategy;
 import tk.dimantchick.hobot.strategies.SellStrategy;
 import tk.dimantchick.hobot.strategies.Strategy;
@@ -14,20 +13,22 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Сервис, отвечающий за стратегии.
+ * Дает возможность получать стратегии по именам, имени по стратегии,
+ * список имен стратегий для создания/редактирования позиций.
+ */
 @Service
 public class StrategiesService {
 
     private Logger logger = LoggerFactory.getLogger(StrategiesService.class);
-
-    private Api api;
 
     private final ApplicationContext context;
     private Map<String, BuyStrategy> buyStrategies;
     private Map<String, SellStrategy> sellStrategies;
     private Map<Strategy, String> strategyNames;
 
-    public StrategiesService(Api api, ApplicationContext context) {
-        this.api = api;
+    public StrategiesService(ApplicationContext context) {
         this.context = context;
         loadStrategies();
     }

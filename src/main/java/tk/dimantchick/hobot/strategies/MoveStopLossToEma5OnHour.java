@@ -7,6 +7,10 @@ import tk.dimantchick.hobot.domain.position.HobotPosition;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * Стратегия.
+ * ToDo описание алгоритма.
+ */
 @Component
 public class MoveStopLossToEma5OnHour implements SellStrategy {
 

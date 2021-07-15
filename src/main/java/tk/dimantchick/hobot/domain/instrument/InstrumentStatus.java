@@ -1,13 +1,11 @@
 package tk.dimantchick.hobot.domain.instrument;
-
+/**
+ * Состояние инструмента.
+ * Для инструмента в состоянии ENABLED получаются свечи задаче по расписанию.
+ */
 public enum InstrumentStatus {
     DISABLED("DISABLED"),
     ENABLED("ENABLED");
-/*    READY("READY"),
-    READY_TO_BUY("READY_TO_BUY"),
-    BUYING("BUYING"),
-    BUYED("BUYED"),
-    SELLING("SELLING");*/
 
     private String value;
 

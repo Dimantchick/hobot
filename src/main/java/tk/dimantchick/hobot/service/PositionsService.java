@@ -21,6 +21,10 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Сервис, отвечающий за позиции.
+ * Держит в памяти актуальный список активных позиций.
+ */
 @Service
 public class PositionsService {
 
@@ -74,8 +78,6 @@ public class PositionsService {
                         HobotPosition newPosition = new HobotPosition();
                         newPosition.setInstrument(position.getInstrument());
                         newPosition.setStatus(PositionStatus.READY);
-                        //newPosition.setPriceToBuy(position.getPriceToBuy());
-                        //newPosition.setPriceSL(position.getPriceSL());
                         newPosition.setMaxPosition(position.getMaxPosition());
                         newPosition.setBuyStrategy(position.getBuyStrategy());
                         newPosition.setSellStrategy(position.getSellStrategy());

@@ -1,19 +1,16 @@
 package tk.dimantchick.hobot.shedule;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import tk.dimantchick.hobot.api.Api;
 import tk.dimantchick.hobot.service.GrabbingService;
 import tk.dimantchick.hobot.service.OperationsService;
 import tk.dimantchick.hobot.service.PositionsService;
 
+/**
+ * Сервис, отвечающий за расписания.
+ */
 @Service
 public class ScheduledTasks {
-
-    private Logger logger = LoggerFactory.getLogger(ScheduledTasks.class);
 
     private final GrabbingService grabbingService;
     private final OperationsService operationsService;

@@ -6,6 +6,10 @@ import tk.dimantchick.hobot.domain.position.HobotPosition;
 
 import java.util.List;
 
+/**
+ * Стратегия.
+ * ToDo описание алгоритма.
+ */
 @Component
 public class SellAtEma50ReverseOnHour implements SellStrategy {
 
@@ -18,9 +22,7 @@ public class SellAtEma50ReverseOnHour implements SellStrategy {
         }
         CandleHour lastHour = lastHourCandles.get(0);
         CandleHour preLastHour = lastHourCandles.get(1);
-        //CandleWithEmaHA pre2LastHour = lastHourCandles.get(2);
         if (lastHour.getEma50().compareTo(preLastHour.getEma50()) < 0) {
-            //System.out.println("SellAtEma50ReverseOnHour1");
             return true;
         }
         return false;

@@ -1,13 +1,15 @@
 package tk.dimantchick.hobot.controller;
 
 import org.apache.commons.collections4.list.TreeList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ru.tinkoff.invest.openapi.model.rest.Currency;
 import ru.tinkoff.invest.openapi.model.rest.MarketInstrument;
 import tk.dimantchick.hobot.api.Api;
@@ -20,15 +22,21 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Контроллер,отвечающий за страницы с инструментами.
+ */
 @Controller
 @RequestMapping("/instruments")
 public class InstrumentsController {
 
-    @Autowired
-    private InstrumentsService instrumentsService;
+    private final InstrumentsService instrumentsService;
 
-    @Autowired
-    private Api api;
+    private final Api api;
+
+    public InstrumentsController(InstrumentsService instrumentsService, Api api) {
+        this.instrumentsService = instrumentsService;
+        this.api = api;
+    }
 
     @GetMapping("")
     public String showAll(@ModelAttribute("filter")InstrumentsFilter filter, Model model/*, @RequestParam(name = "page", defaultValue = "0") int page*/) {

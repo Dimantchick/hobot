@@ -8,6 +8,9 @@ import org.springframework.context.annotation.PropertySource;
 import ru.tinkoff.invest.openapi.OpenApi;
 import ru.tinkoff.invest.openapi.okhttp.OkHttpOpenApi;
 
+/**
+ * Конфигурация апи.
+ */
 @Configuration
 @ComponentScan("tk.dimantchick.hobot")
 @PropertySource("file:./config.properties")
@@ -16,9 +19,6 @@ public class ApiConfig {
 
     @Value("${tk.dimantchick.hobot.token}")
     private String token;
-
-    @Value("${tk.dimantchick.hobot.account}")
-    private String account;
 
     @Bean
     public OpenApi openApi() {

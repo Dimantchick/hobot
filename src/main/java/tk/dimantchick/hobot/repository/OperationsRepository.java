@@ -11,6 +11,10 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * Репозиторий операций.
+ */
 @Repository
 public interface OperationsRepository extends PagingAndSortingRepository<HobotOperation, Long> {
 
@@ -23,7 +27,4 @@ public interface OperationsRepository extends PagingAndSortingRepository<HobotOp
     List<HobotOperation> findAll(Sort sort);
 
     void deleteByOperationDateBeforeAndPositionIsNull(OffsetDateTime date);
-
-
-
 }

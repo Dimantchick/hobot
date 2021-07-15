@@ -8,6 +8,9 @@ import tk.dimantchick.hobot.service.InstrumentsService;
 
 import java.util.Optional;
 
+/**
+ * Конвертер для получения инструмента по тикеру.
+ */
 @Component
 public class StringToInstrumentConverter implements Converter<String, Instrument> {
 

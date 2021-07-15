@@ -12,6 +12,11 @@ import tk.dimantchick.hobot.repository.InstrumentRepository;
 
 import java.util.*;
 
+/**
+ * Сервис, отвечающий за инструменты.
+ * Держит в памяти актуальный список активных инструментов.
+ */
+
 @Service
 public class InstrumentsService {
 
@@ -97,37 +102,17 @@ public class InstrumentsService {
     }
 
     public int countByFilter(InstrumentsFilter filter) {
-//        if (filter.getStatus() != null) {
             return instrumentRepository.countByTickerContainingIgnoreCaseAndNameContainingIgnoreCaseAndFigiContainingIgnoreCaseAndCurrencyInAndStatusIn(
                     filter.getTicker(), filter.getName(), filter.getFigi(),
                     filter.getCurrency() == null? Currency.values():new Currency[] {filter.getCurrency()}, filter.getStatus() == null? InstrumentStatus.values() : new InstrumentStatus[] {filter.getStatus()}
             );
-//        }
-//        else {
-//            return instrumentRepository.countByTickerContainingIgnoreCaseAndNameContainingIgnoreCaseAndFigiContainingIgnoreCaseAndCurrencyIs(
-//                    filter.getTicker(), filter.getName(), filter.getFigi(), filter.getCurrency()
-//            );
-//        }
     }
 
     public List<Instrument> getByFilter(InstrumentsFilter filter, Pageable pageable) {
-        /*return instrumentRepository.findInstrumentByCustomFilter(
-                filter.getTicker(), filter.getName(), filter.getFigi(), filter.getCurrency(), filter.getStatus(),
-                pageable);*/
-
-//        if (filter.getStatus() != null) {
             return instrumentRepository.findInstrumentByTickerContainingIgnoreCaseAndNameContainingIgnoreCaseAndFigiContainingIgnoreCaseAndCurrencyInAndStatusIn(
-//                    filter.getTicker(), filter.getName(), filter.getFigi(), filter.getCurrency() == null ? "%" : filter.getCurrency().getValue(), filter.getStatus() == null? "%" : filter.getStatus().getValue(), pageable
                     filter.getTicker(), filter.getName(), filter.getFigi(),
                     filter.getCurrency() == null? Currency.values():new Currency[] {filter.getCurrency()}, filter.getStatus() == null? InstrumentStatus.values() : new InstrumentStatus[] {filter.getStatus()}, pageable
             );
-//        }
-//        else {
-//            return instrumentRepository.findInstrumentByTickerContainingIgnoreCaseAndNameContainingIgnoreCaseAndFigiContainingIgnoreCaseAndCurrencyIs(
-//                    filter.getTicker(), filter.getName(), filter.getFigi(), filter.getCurrency(), pageable
-//            );
-//        }
     }
-
 
 }

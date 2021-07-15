@@ -9,6 +9,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.OffsetDateTime;
 
+/**
+ * Свеча интервал 1 час.
+ */
 @Entity
 @Table(name = "CANDLES_HOUR")
 public class CandleHour {
@@ -37,16 +40,14 @@ public class CandleHour {
     private BigDecimal ema100;
     private BigDecimal ema200;
 
-    //public BigDecimal stochK;
-
     private CandleResolution resolution;
 
-    public static final BigDecimal ema5A = new BigDecimal(2D/(5D + 1D));
-    public static final BigDecimal ema10A = new BigDecimal(2D/(10D + 1D));
-    public static final BigDecimal ema20A = new BigDecimal(2D/(20D + 1D));
-    public static final BigDecimal ema50A = new BigDecimal(2D/(50D + 1D));
-    public static final BigDecimal ema100A = new BigDecimal(2D/(100D + 1D));
-    public static final BigDecimal ema200A = new BigDecimal(2D/(200D + 1D));
+    public static final BigDecimal ema5A = BigDecimal.valueOf(2D / (5D + 1D));
+    public static final BigDecimal ema10A = BigDecimal.valueOf(2D / (10D + 1D));
+    public static final BigDecimal ema20A = BigDecimal.valueOf(2D / (20D + 1D));
+    public static final BigDecimal ema50A = BigDecimal.valueOf(2D / (50D + 1D));
+    public static final BigDecimal ema100A = BigDecimal.valueOf(2D / (100D + 1D));
+    public static final BigDecimal ema200A = BigDecimal.valueOf(2D / (200D + 1D));
 
 
     public CandleHour(Candle candle, Instrument instrument) {
@@ -84,8 +85,8 @@ public class CandleHour {
         ema50 = closePrice.multiply(ema50A).add(BigDecimal.ONE.subtract(ema50A).multiply(last.ema50)).setScale(4, RoundingMode.HALF_UP);
         ema100 = closePrice.multiply(ema100A).add(BigDecimal.ONE.subtract(ema100A).multiply(last.ema100)).setScale(4, RoundingMode.HALF_UP);
         ema200 = closePrice.multiply(ema200A).add(BigDecimal.ONE.subtract(ema200A).multiply(last.ema200)).setScale(4, RoundingMode.HALF_UP);
-        HAopenPrice = (last.HAopenPrice.add(last.HAclosePrice)).divide(new BigDecimal(2)).setScale(10, RoundingMode.HALF_UP);
-        HAclosePrice = (openPrice.add(closePrice).add(lowestPrice).add(highestPrice)).divide(new BigDecimal(4));
+        HAopenPrice = (last.HAopenPrice.add(last.HAclosePrice)).divide(new BigDecimal(2), RoundingMode.HALF_DOWN).setScale(10, RoundingMode.HALF_UP);
+        HAclosePrice = (openPrice.add(closePrice).add(lowestPrice).add(highestPrice)).divide(new BigDecimal(4), RoundingMode.HALF_DOWN);
         HAlowestPrice = lowestPrice.min(HAopenPrice).min(HAclosePrice);
         HAhighestPrice = highestPrice.max(HAopenPrice).max(HAclosePrice);
         this.resolution = candle.getInterval();
@@ -136,14 +137,6 @@ public class CandleHour {
     public Long getId() {
         return id;
     }
-
-   /* public BigDecimal getStochK() {
-        return stochK;
-    }
-
-    public void setStochK(BigDecimal stochK) {
-        this.stochK = stochK;
-    }*/
 
     public Instrument getInstrument() {
         return instrument;

@@ -10,6 +10,12 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
+/**
+ * Операция по инструменту.
+ * В случае создания "виртуальной" операции, необходимо присвоить уникальный идентификатор.
+ * Можно использовать за основу текущее время.
+ */
+
 @Entity
 @Table(name = "OPERATIONS")
 public class HobotOperation {
@@ -196,10 +202,7 @@ public class HobotOperation {
         if (commission == null) {
             return false;
         }
-        if (commission.equals(BigDecimal.ZERO)) {
-            return false;
-        }
-        return true;
+        return !commission.equals(BigDecimal.ZERO);
     }
 
     public void setPosition(HobotPosition position) {

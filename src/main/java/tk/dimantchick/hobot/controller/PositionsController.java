@@ -17,21 +17,27 @@ import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+/**
+ * Контроллер,отвечающий за работу с позициями.
+ */
 @Controller
 @RequestMapping("/positions")
 public class PositionsController {
 
-    @Autowired
-    private PositionsService positionsService;
+    private final PositionsService positionsService;
 
-    @Autowired
-    private StrategiesService strategiesService;
+    private final StrategiesService strategiesService;
 
-    @Autowired
-    private InstrumentsService instrumentsService;
+    private final InstrumentsService instrumentsService;
 
-    @Autowired
-    private Api api;
+    private final Api api;
+
+    public PositionsController(PositionsService positionsService, StrategiesService strategiesService, InstrumentsService instrumentsService, Api api) {
+        this.positionsService = positionsService;
+        this.strategiesService = strategiesService;
+        this.instrumentsService = instrumentsService;
+        this.api = api;
+    }
 
     @GetMapping("")
     public String showAll(Model model) {
@@ -69,7 +75,6 @@ public class PositionsController {
             model.addAttribute("sellStrats", strategiesService.getSellStrategies().keySet());
             return "positions/new";
         }
-//        System.out.println(position);
         positionsService.newPosition(position);
         return "redirect:/positions";
     }
@@ -97,7 +102,6 @@ public class PositionsController {
             model.addAttribute("sellStrats", strategiesService.getSellStrategies().keySet());
             return "positions/edit";
         }
-//        System.out.println(position);
         Optional<HobotPosition> fromDB = positionsService.getByID(position.getId());
         if (fromDB.isPresent()) {
             HobotPosition hobotPosition = fromDB.get();
@@ -133,6 +137,4 @@ public class PositionsController {
     public BigDecimal balance() {
         return api.getCurrency(Currency.USD).getBalance();
     }
-
-
 }

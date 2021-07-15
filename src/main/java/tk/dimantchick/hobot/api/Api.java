@@ -10,6 +10,21 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * Обертка Тинькофф апи.
+ * OpenAPI имеет жесткие ограничения на количество запросов,
+ * поэтому реализована задержка между запросами. Ответы приходят значительно
+ * раньше, чем стоит давать повторный запрос. Потому пока не имеет большого
+ * смысла использовать функционал CompletableFuture.
+ * ToDo
+ * - Отлавливание исключений.
+ * - Мониторинг состояния апи. Перезапуск в случае сбоя (v0.5.1 должен корректно
+ * завершать свою работу в случае закрытия - заявлен фикс ошибок).
+ * - При выходе давно обещанного OpenAPI v2 реализовать поддержку нескольких
+ * токенов для параллельной работы (позволит "ускорить"). Как следствие реализовывать
+ * функционал CompletableFuture в полной мере.
+ */
 @Component
 public class Api {
 
@@ -37,8 +52,7 @@ public class Api {
 
     public List<Order> getOrders() {
         sleep();
-        List<Order> orders = openApi.getOrdersContext().getOrders(BROCKER_ACCOUNT).join();
-        return orders;
+        return openApi.getOrdersContext().getOrders(BROCKER_ACCOUNT).join();
     }
 
     public PlacedLimitOrder placeLimitOrder(String figi, int lots, BigDecimal price, OperationType type) {
@@ -101,8 +115,7 @@ public class Api {
     public List<Candle> getHistoricalCandles(String figi, OffsetDateTime start, OffsetDateTime end, CandleResolution cr) {
         sleep();
         Optional<Candles> candles = openApi.getMarketContext().getMarketCandles(figi, start, end, cr).join();
-        List<Candle> get = candles.get().getCandles();
-        return get;
+        return candles.get().getCandles();
     }
 
     public MarketInstrument getInstrumentByFigi(String figi) {

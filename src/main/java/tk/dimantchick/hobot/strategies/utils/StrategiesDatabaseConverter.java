@@ -9,14 +9,16 @@ import javax.persistence.AttributeConverter;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Конвертирует список стратегий в строку и наоборот,
+ * для сохранения в поле позиции в БД.
+ */
 @Component
 public class StrategiesDatabaseConverter implements AttributeConverter<Set<String>, String> {
 
-    private final ApplicationContext context;
     private StrategiesService strategiesService;
 
-    public StrategiesDatabaseConverter(ApplicationContext context, StrategiesService strategiesService) {
-        this.context = context;
+    public StrategiesDatabaseConverter(StrategiesService strategiesService) {
         this.strategiesService = strategiesService;
     }
 

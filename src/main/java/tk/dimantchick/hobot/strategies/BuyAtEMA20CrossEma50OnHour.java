@@ -9,6 +9,10 @@ import tk.dimantchick.hobot.domain.position.PositionStatus;
 
 import java.math.BigDecimal;
 
+/**
+ * Стратегия.
+ * ToDo описание алгоритма.
+ */
 @Component
 public class BuyAtEMA20CrossEma50OnHour implements BuyStrategy {
     @Override
@@ -19,7 +23,6 @@ public class BuyAtEMA20CrossEma50OnHour implements BuyStrategy {
         }
         CandleHour lastHour = position.getInstrument().getLastHourCandles().get(0);
         CandleHour preLastHour = position.getInstrument().getLastHourCandles().get(1);
-        Instrument instrument = position.getInstrument();
 
         if (position.getStatus() == PositionStatus.READY) {
             if (preLastHour.getEma20().compareTo(preLastHour.getEma50()) < 0 &&

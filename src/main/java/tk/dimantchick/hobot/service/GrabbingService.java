@@ -19,22 +19,29 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Set;
 
+
+/**
+ * Сервис, постоянно получающий свечи по активным инструментам.
+ */
 @Service
 public class GrabbingService {
 
     private Logger logger = LoggerFactory.getLogger(GrabbingService.class);
 
-    @Autowired
-    private Api api;
+    private final Api api;
 
-    @Autowired
-    private Candles5minRepository candles5minRepository;
+    private final Candles5minRepository candles5minRepository;
 
-    @Autowired
-    private CandlesHourRepository candlesHourRepository;
+    private final CandlesHourRepository candlesHourRepository;
 
-    @Autowired
-    private InstrumentsService instrumentsService;
+    private final InstrumentsService instrumentsService;
+
+    public GrabbingService(Api api, Candles5minRepository candles5minRepository, CandlesHourRepository candlesHourRepository, InstrumentsService instrumentsService) {
+        this.api = api;
+        this.candles5minRepository = candles5minRepository;
+        this.candlesHourRepository = candlesHourRepository;
+        this.instrumentsService = instrumentsService;
+    }
 
     @Transactional
     public void update5minCandles() {
@@ -134,11 +141,11 @@ public class GrabbingService {
             List<Candle5min> candle5mins = instrument.getLast5MinCandles();
             List<Candle5min> new5min = new TreeList<>();
             List<Candle5min> toRemove5min = new TreeList<>();
-            for (int i = 0; i < candle5mins.size(); i++) {
-                if (candle5mins.get(i).getTime().isAfter(minus2hours)) {
-                    new5min.add(candle5mins.get(i));
+            for (Candle5min candle5min : candle5mins) {
+                if (candle5min.getTime().isAfter(minus2hours)) {
+                    new5min.add(candle5min);
                 } else {
-                    toRemove5min.add(candle5mins.get(i));
+                    toRemove5min.add(candle5min);
                 }
             }
             instrument.setLast5MinCandles(new5min);
@@ -149,11 +156,11 @@ public class GrabbingService {
             List<CandleHour> candleHours = instrument.getLastHourCandles();
             List<CandleHour> newHours = new TreeList<>();
             List<CandleHour> toRemoveHours = new TreeList<>();
-            for (int i = 0; i < candleHours.size(); i++) {
-                if (candleHours.get(i).getTime().isAfter(minus3days)) {
-                    newHours.add(candleHours.get(i));
+            for (CandleHour candleHour : candleHours) {
+                if (candleHour.getTime().isAfter(minus3days)) {
+                    newHours.add(candleHour);
                 } else {
-                    toRemoveHours.add(candleHours.get(i));
+                    toRemoveHours.add(candleHour);
                 }
             }
             instrument.setLastHourCandles(newHours);

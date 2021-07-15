@@ -3,10 +3,13 @@ package tk.dimantchick.hobot.strategies;
 import org.springframework.stereotype.Component;
 import tk.dimantchick.hobot.domain.candles.CandleHour;
 import tk.dimantchick.hobot.domain.instrument.Instrument;
-import tk.dimantchick.hobot.domain.instrument.InstrumentStatus;
 import tk.dimantchick.hobot.domain.position.HobotPosition;
 import tk.dimantchick.hobot.domain.position.PositionStatus;
 
+/**
+ * Стратегия.
+ * ToDo описание алгоритма.
+ */
 @Component
 public class BuyAtEMA50OnHour implements BuyStrategy {
     @Override

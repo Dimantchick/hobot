@@ -8,6 +8,9 @@ import ru.tinkoff.invest.openapi.model.rest.PlacedLimitOrder;
 
 import javax.persistence.AttributeConverter;
 
+/**
+ * Конвертирует выставленный ордер в JSON для сохранения в поле позиции.
+ */
 @Component
 public class OrderConverter implements AttributeConverter<PlacedLimitOrder, String> {
     @Autowired
