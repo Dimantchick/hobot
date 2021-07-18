@@ -1,6 +1,8 @@
 package tk.dimantchick.hobot.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.tinkoff.invest.openapi.model.rest.Currency;
 import tk.dimantchick.hobot.api.Api;
 import tk.dimantchick.hobot.domain.position.HobotPosition;
+import tk.dimantchick.hobot.domain.position.PositionFilter;
 import tk.dimantchick.hobot.domain.position.PositionStatus;
 import tk.dimantchick.hobot.service.InstrumentsService;
 import tk.dimantchick.hobot.service.PositionsService;
@@ -40,9 +43,17 @@ public class PositionsController {
     }
 
     @GetMapping("")
-    public String showAll(Model model) {
-        Iterable<HobotPosition> all = positionsService.getAll();
-        model.addAttribute("positions", all);
+    public String showAll(@ModelAttribute("filter") PositionFilter filter, Model model) {
+        long pages = positionsService.countByFilter(filter);
+        long maxPage = pages % filter.getOnPage() > 0 ? pages / filter.getOnPage() + 1 : pages / filter.getOnPage();
+        filter.fix((int) maxPage);
+        // NEED sort by id for pages correct working with sort by ticker
+        Sort sort = Sort.by(filter.getSortDirection(), filter.getSort()).and(Sort.by("id"));
+        Pageable pageable = PageRequest.of(filter.getPage() - 1, filter.getOnPage(), sort);
+        Iterable<HobotPosition> positions = positionsService.findByFilter(filter, pageable);
+        model.addAttribute("positions", positions);
+        model.addAttribute("statuses", PositionStatus.values());
+        model.addAttribute("pages", maxPage);
         return "positions/showAll";
     }
 

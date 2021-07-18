@@ -22,3 +22,24 @@ function nextPage() {
         page.value--;
     }
 }
+
+function setSort(sortField) {
+    var form = document.getElementById('filter');
+    var sort = document.getElementById('sort');
+    var direction = document.getElementById('sortDirection');
+
+    if (sort.value === sortField) {
+    //    invert direction of sorting
+        if (direction.value === 'ASC') {
+            direction.value = 'DESC';
+        }
+        else {
+            direction.value = 'ASC';
+        }
+    }
+    else {
+        sort.value = sortField;
+        direction.value = 'ASC';
+    }
+    form.submit();
+}

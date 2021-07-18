@@ -91,6 +91,7 @@ public class Api {
         sleep();
         return openApi.getPortfolioContext().getPortfolioCurrencies(BROCKER_ACCOUNT).join().getCurrencies();
     }
+
     public CurrencyPosition getCurrency(Currency currency) {
         sleep();
         Currencies currencies = openApi.getPortfolioContext().getPortfolioCurrencies(BROCKER_ACCOUNT).join();

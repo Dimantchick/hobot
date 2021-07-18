@@ -15,10 +15,10 @@ import java.util.Objects;
 @Table(name = "INSTRUMENTS")
 public class Instrument {
 
-    private String figi;
     @Id
     private String ticker;
     private String name;
+    private String figi;
     @Enumerated(EnumType.STRING)
     private Currency currency;
     @Enumerated(EnumType.STRING)

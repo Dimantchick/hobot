@@ -19,9 +19,8 @@ public class CandleHour {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
     @ManyToOne
-    @JoinColumn(name="instrument_id")
+    @JoinColumn(name = "instrument_id")
     private Instrument instrument;
     private OffsetDateTime time;
     private BigDecimal openPrice;
@@ -48,7 +47,6 @@ public class CandleHour {
     public static final BigDecimal ema50A = BigDecimal.valueOf(2D / (50D + 1D));
     public static final BigDecimal ema100A = BigDecimal.valueOf(2D / (100D + 1D));
     public static final BigDecimal ema200A = BigDecimal.valueOf(2D / (200D + 1D));
-
 
     public CandleHour(Candle candle, Instrument instrument) {
         this.time = candle.getTime();
@@ -123,9 +121,11 @@ public class CandleHour {
 
         return HAopenPrice.compareTo(HAclosePrice) < 0;
     }
+
     public boolean isHARed() {
         return HAopenPrice.compareTo(HAclosePrice) > 0;
     }
+
     public double HAoc() {
         return Math.abs(HAopenPrice.doubleValue() - HAclosePrice.doubleValue());
     }

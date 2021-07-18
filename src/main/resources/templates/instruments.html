@@ -22,7 +22,7 @@
             vertical-align: top;
         }
         .currency {
-            width: 60px;
+            width: 70px;
             vertical-align: top;
         }
         .status {
@@ -43,17 +43,37 @@
 <div th:id="body">
     <div class="center">
         <form name="filter" id="filter" th:method="get" th:action="@{/instruments}" th:object="${filter}">
+            <input type="hidden" th:field="*{sort}">
+            <input type="hidden" th:field="*{sortDirection}">
             <table th:class="table">
                 <thead>
                 <tr>
-                    <!--<th data-priority="1">Id</th>-->
-                    <th data-priority="1">Ticker</th>
-                    <th data-priority="2">Name</th>
-                    <th data-priority="3">Figi</th>
-                    <th data-priority="4">Currency</th>
-                    <th data-priority="5">Status</th>
+                    <th data-priority="1" onclick="setSort('ticker')" class="headerlink">
+                        <div th:if='${!filter.getSort().equals("ticker")}'>Ticker</div>
+                        <div th:if='${filter.getSort().equals("ticker") && filter.getSortDirection().isAscending()}'>Ticker ▲</div>
+                        <div th:if='${filter.getSort().equals("ticker") && filter.getSortDirection().isDescending()}'>Ticker ▼</div>
+                    </th>
+                    <th data-priority="2" onclick="setSort('name')" class="headerlink">
+                        <div th:if='${!filter.getSort().equals("name")}'>Name</div>
+                        <div th:if='${filter.getSort().equals("name") && filter.getSortDirection().isAscending()}'>Name ▲</div>
+                        <div th:if='${filter.getSort().equals("name") && filter.getSortDirection().isDescending()}'>Name ▼</div>
+                    </th>
+                    <th data-priority="3" onclick="setSort('figi')" class="headerlink">
+                        <div th:if='${!filter.getSort().equals("figi")}'>Figi</div>
+                        <div th:if='${filter.getSort().equals("figi") && filter.getSortDirection().isAscending()}'>Figi ▲</div>
+                        <div th:if='${filter.getSort().equals("figi") && filter.getSortDirection().isDescending()}'>Figi ▼</div>
+                    </th>
+                    <th data-priority="4" onclick="setSort('currency')" class="headerlink">
+                        <div th:if='${!filter.getSort().equals("currency")}'>Currency</div>
+                        <div th:if='${filter.getSort().equals("currency") && filter.getSortDirection().isAscending()}'>Currency ▲</div>
+                        <div th:if='${filter.getSort().equals("currency") && filter.getSortDirection().isDescending()}'>Currency ▼</div>
+                    </th>
+                    <th data-priority="5" onclick="setSort('status')" class="headerlink">
+                        <div th:if='${!filter.getSort().equals("status")}'>Status</div>
+                        <div th:if='${filter.getSort().equals("status") && filter.getSortDirection().isAscending()}'>Status ▲</div>
+                        <div th:if='${filter.getSort().equals("status") && filter.getSortDirection().isDescending()}'>Status ▼</div>
+                    </th>
                     <th data-priority="6">Action</th>
-                    <!--            <th data-priority="7">Disable</th>-->
                 </tr>
                 </thead>
                 <tbody>
@@ -87,18 +107,18 @@
                     <td th:text="${instrument.getCurrency()}" class="currency"></td>
                     <td th:text="${instrument.getStatus()}" class="status"></td>
                     <td th:if="${instrument.getStatus()} == ${disabled}" class="action"><a
-                            th:href="@{/instruments/{id}/ENABLE(id=${instrument.getTicker()})}">Enable</a></td>
+                            th:href="@{/instruments/{ticker}/ENABLE(ticker=${instrument.getTicker()})}">Enable</a></td>
                     <td th:if="${instrument.getStatus()} == ${enabled}" class="action"><a
-                            th:href="@{/instruments/{id}/DISABLE(id=${instrument.getTicker()})}">Disable</a></td>
+                            th:href="@{/instruments/{ticker}/DISABLE(ticker=${instrument.getTicker()})}">Disable</a></td>
                 </tr>
                 </tbody>
             </table>
             Страница:<br/>
             <input type="button" value="&lt;&lt;" id="prev" onclick="prevPage()">&nbsp;&nbsp;&nbsp;
-            <input type="text" th:size="1" th:field="*{page}">
+            <input type="text" th:size="1" th:field="*{page}"><span th:text="'из ' + ${pages}"></span>
             <input type="submit" th:value="Go">&nbsp;&nbsp;&nbsp;
             <input type="button" value="&gt;&gt;" id="next" onclick="nextPage()"><br/>
-            <div th:text="'Всего: ' + ${pages}"></div>
+            На странице <input type="text" th:size="1" th:field="*{onPage}"><br/>
         </form>
         <input type="hidden" id="maxPage" th:value="${pages}">
     </div>

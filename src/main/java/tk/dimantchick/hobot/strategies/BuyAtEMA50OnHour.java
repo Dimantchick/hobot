@@ -20,13 +20,12 @@ public class BuyAtEMA50OnHour implements BuyStrategy {
         }
         CandleHour lastHour = position.getInstrument().getLastHourCandles().get(0);
         Instrument instrument = position.getInstrument();
-        if (position.getStatus() == PositionStatus.READY){
+        if (position.getStatus() == PositionStatus.READY) {
             if (lastHour.getEma5().compareTo(lastHour.getEma50()) > 0) {
                 position.setStatus(PositionStatus.NEED_TO_BUY);
                 position.setPriceToBuy(lastHour.getEma50());
             }
-        }
-        else if (position.getStatus() == PositionStatus.NEED_TO_BUY) {
+        } else if (position.getStatus() == PositionStatus.NEED_TO_BUY) {
             boolean isReady = false;
             for (int i = 1; i < Math.min(position.getInstrument().getLastHourCandles().size(), 15); i++) {
                 CandleHour candle = position.getInstrument().getLastHourCandles().get(i);
@@ -37,8 +36,7 @@ public class BuyAtEMA50OnHour implements BuyStrategy {
             if (isReady) {
                 position.setPriceToBuy(lastHour.getEma50());
                 return true;
-            }
-            else {
+            } else {
                 position.setStatus(PositionStatus.READY);
                 return false;
             }

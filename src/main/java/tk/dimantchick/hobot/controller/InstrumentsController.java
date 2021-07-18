@@ -39,18 +39,13 @@ public class InstrumentsController {
     }
 
     @GetMapping("")
-    public String showAll(@ModelAttribute("filter")InstrumentsFilter filter, Model model/*, @RequestParam(name = "page", defaultValue = "0") int page*/) {
-        final int onPage = 25;
-        int pages = instrumentsService.countByFilter(filter);
-        int maxPage = pages % onPage > 0 ? pages / onPage + 1 : pages / onPage;
-        if (filter.getPage() > maxPage) {
-            filter.setPage(maxPage);
-        }
-        if (filter.getPage() < 1) {
-            filter.setPage(1);
-        }
-        Pageable pageable = PageRequest.of(filter.getPage() - 1, onPage, Sort.Direction.ASC, "ticker");
-        List<Instrument> all = instrumentsService.getByFilter(filter, pageable);
+    public String showAll(@ModelAttribute("filter") InstrumentsFilter filter, Model model) {
+        long pages = instrumentsService.countByFilter(filter);
+        long maxPage = pages % filter.getOnPage() > 0 ? pages / filter.getOnPage() + 1 : pages / filter.getOnPage();
+        filter.fix((int) maxPage);
+        Sort sort = Sort.by(filter.getSortDirection(), filter.getSort()).and(Sort.by("ticker"));
+        Pageable pageable = PageRequest.of(filter.getPage() - 1, filter.getOnPage(), sort);
+        Iterable<Instrument> all = instrumentsService.getByFilter(filter, pageable);
         model.addAttribute("instruments", all);
         model.addAttribute("enabled", InstrumentStatus.ENABLED);
         model.addAttribute("disabled", InstrumentStatus.DISABLED);

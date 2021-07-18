@@ -45,7 +45,7 @@ public class OperationsService {
             List<Operation> operations = api.getOperations(instrument.getFigi(), yesterday).getOperations();
             for (Operation operation : operations) {
                 if (operation.getOperationType() == OperationTypeWithCommission.BUY
-                || operation.getOperationType() == OperationTypeWithCommission.SELL) {
+                        || operation.getOperationType() == OperationTypeWithCommission.SELL) {
                     Optional<HobotOperation> byId = operationsRepository.findById(operation.getId());
                     if (byId.isPresent()) {
                         HobotOperation operationFromDB = byId.get();
@@ -69,6 +69,4 @@ public class OperationsService {
     public void save(HobotOperation operation) {
         operationsRepository.save(operation);
     }
-
-
 }

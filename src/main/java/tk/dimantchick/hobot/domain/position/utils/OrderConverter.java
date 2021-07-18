@@ -15,6 +15,7 @@ import javax.persistence.AttributeConverter;
 public class OrderConverter implements AttributeConverter<PlacedLimitOrder, String> {
     @Autowired
     private ObjectMapper mapper;
+
     @Override
     public String convertToDatabaseColumn(PlacedLimitOrder placedLimitOrder) {
         try {

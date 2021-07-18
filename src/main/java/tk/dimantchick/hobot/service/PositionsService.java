@@ -2,6 +2,8 @@ package tk.dimantchick.hobot.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.invest.openapi.model.rest.OperationStatus;
 import ru.tinkoff.invest.openapi.model.rest.OperationType;
@@ -10,8 +12,10 @@ import ru.tinkoff.invest.openapi.model.rest.PlacedLimitOrder;
 import tk.dimantchick.hobot.api.Api;
 import tk.dimantchick.hobot.domain.operations.HobotOperation;
 import tk.dimantchick.hobot.domain.position.HobotPosition;
+import tk.dimantchick.hobot.domain.position.PositionFilter;
 import tk.dimantchick.hobot.domain.position.PositionStatus;
 import tk.dimantchick.hobot.repository.PositionRepository;
+import tk.dimantchick.hobot.repository.specifications.PositionsSpecification;
 import tk.dimantchick.hobot.strategies.Strategy;
 
 import java.math.BigDecimal;
@@ -220,10 +224,6 @@ public class PositionsService {
         }
     }
 
-    public Set<HobotPosition> getAll() {
-        return positionRepository.findAll();
-    }
-
     public Optional<HobotPosition> getByID(Long id) {
         return positionRepository.findById(id);
     }
@@ -245,4 +245,18 @@ public class PositionsService {
         logger.info("Delete " + position);
         positionRepository.delete(position);
     }
+
+    public Page<HobotPosition> findByFilter(PositionFilter filter, Pageable pageable) {
+        return positionRepository.findAll(
+                PositionsSpecification.byFilter(filter),
+                pageable
+        );
+    }
+
+    public long countByFilter(PositionFilter filter) {
+        return positionRepository.count(
+                PositionsSpecification.byFilter(filter)
+        );
+    }
+
 }

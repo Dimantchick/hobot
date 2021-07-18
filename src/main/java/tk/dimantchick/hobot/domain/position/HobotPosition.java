@@ -31,7 +31,6 @@ public class HobotPosition {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "instrument_id")
     @NotNull(message = "Укажите инструмент")
     private Instrument instrument;
 
@@ -45,7 +44,7 @@ public class HobotPosition {
     private List<HobotOperation> operations = new TreeList<>();
 
     private int quantity;
-    @Min(value = 0, message = "Должно быть > 0")
+    @Min(value = 0, message = "Должно быть >= 0")
     private BigDecimal maxPosition = BigDecimal.ZERO;
     private OffsetDateTime readyToBuyTime;
 

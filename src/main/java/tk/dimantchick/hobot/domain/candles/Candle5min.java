@@ -21,7 +21,7 @@ public class Candle5min {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="instrument_id")
+    @JoinColumn(name = "instrument_id")
     private Instrument instrument;
     private OffsetDateTime time;
     private BigDecimal openPrice;
@@ -95,11 +95,11 @@ public class Candle5min {
         BigDecimal min = HAclosePrice.min(HAopenPrice);
         return HAlowestPrice.compareTo(min) < 0;
     }
+
     public boolean isHighThin() {
         BigDecimal max = HAclosePrice.max(HAopenPrice);
         return HAhighestPrice.compareTo(max) > 0;
     }
-
 
     public boolean isHARed() {
         return HAopenPrice.compareTo(HAclosePrice) > 0;

@@ -2,6 +2,7 @@ package tk.dimantchick.hobot.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.invest.openapi.model.rest.Currency;
@@ -9,6 +10,7 @@ import tk.dimantchick.hobot.domain.instrument.Instrument;
 import tk.dimantchick.hobot.domain.instrument.InstrumentStatus;
 import tk.dimantchick.hobot.domain.instrument.InstrumentsFilter;
 import tk.dimantchick.hobot.repository.InstrumentRepository;
+import tk.dimantchick.hobot.repository.specifications.InstrumentsSpecification;
 
 import java.util.*;
 
@@ -48,7 +50,7 @@ public class InstrumentsService {
         activeInstruments = instrumentRepository.findByStatusNot(InstrumentStatus.DISABLED);
     }
 
-    public Set<Instrument> getAllFromDB() {
+    public Iterable<Instrument> getAllFromDB() {
         return instrumentRepository.findAll();
     }
 
@@ -81,12 +83,9 @@ public class InstrumentsService {
     public synchronized void saveAll() {
         instrumentRepository.saveAll(activeInstruments);
     }
+
     public synchronized void saveAll(Collection<Instrument> instruments) {
         instrumentRepository.saveAll(instruments);
-    }
-
-    public Optional<Instrument> getById(Long id) {
-        return instrumentRepository.findById(id);
     }
 
     public Map<String, Instrument> getTickers() {
@@ -101,18 +100,17 @@ public class InstrumentsService {
         return instrumentRepository.countByCurrency(currency);
     }
 
-    public int countByFilter(InstrumentsFilter filter) {
-            return instrumentRepository.countByTickerContainingIgnoreCaseAndNameContainingIgnoreCaseAndFigiContainingIgnoreCaseAndCurrencyInAndStatusIn(
-                    filter.getTicker(), filter.getName(), filter.getFigi(),
-                    filter.getCurrency() == null? Currency.values():new Currency[] {filter.getCurrency()}, filter.getStatus() == null? InstrumentStatus.values() : new InstrumentStatus[] {filter.getStatus()}
-            );
+    public Page<Instrument> getByFilter(InstrumentsFilter filter, Pageable pageable) {
+        return instrumentRepository.findAll(
+                InstrumentsSpecification.byFilter(filter),
+                pageable
+        );
     }
 
-    public List<Instrument> getByFilter(InstrumentsFilter filter, Pageable pageable) {
-            return instrumentRepository.findInstrumentByTickerContainingIgnoreCaseAndNameContainingIgnoreCaseAndFigiContainingIgnoreCaseAndCurrencyInAndStatusIn(
-                    filter.getTicker(), filter.getName(), filter.getFigi(),
-                    filter.getCurrency() == null? Currency.values():new Currency[] {filter.getCurrency()}, filter.getStatus() == null? InstrumentStatus.values() : new InstrumentStatus[] {filter.getStatus()}, pageable
-            );
+    public long countByFilter(InstrumentsFilter filter) {
+        return instrumentRepository.count(
+                InstrumentsSpecification.byFilter(filter)
+        );
     }
 
 }

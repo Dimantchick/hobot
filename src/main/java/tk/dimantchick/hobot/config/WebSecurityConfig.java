@@ -54,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public String getUser() {
         return user;
     }
+
     @Autowired
     public void setUser(@Value("${tk.dimantchick.hobot.user}") String user) {
         this.user = user;
@@ -62,6 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public String getPassword() {
         return password;
     }
+
     @Autowired
     public void setPassword(@Value("${tk.dimantchick.hobot.password}") String password) {
         this.password = passwordEncoder().encode(password);

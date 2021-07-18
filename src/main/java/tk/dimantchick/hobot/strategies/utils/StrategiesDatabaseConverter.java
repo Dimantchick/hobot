@@ -1,6 +1,5 @@
 package tk.dimantchick.hobot.strategies.utils;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import tk.dimantchick.hobot.service.StrategiesService;
 import tk.dimantchick.hobot.strategies.Strategy;

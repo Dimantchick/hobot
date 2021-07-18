@@ -24,11 +24,11 @@ public class HobotOperation {
     private String id;
 
     @ManyToOne
-    @JoinColumn(name="instrument_id")
+    @JoinColumn(name = "instrument_id")
     private Instrument instrument;
 
     @ManyToOne
-    @JoinColumn(name="position_id")
+    @JoinColumn(name = "position_id")
     private HobotPosition position;
 
     private OperationStatus status;

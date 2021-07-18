@@ -3,7 +3,6 @@ package tk.dimantchick.hobot.service;
 import org.apache.commons.collections4.list.TreeList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.invest.openapi.model.rest.Candle;
@@ -169,6 +168,4 @@ public class GrabbingService {
         }
         instrumentsService.saveAll();
     }
-
-
 }

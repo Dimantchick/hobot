@@ -23,7 +23,7 @@ public class SellAtEma20CrossEma50OnHour implements SellStrategy {
         CandleHour lastHour = lastHourCandles.get(0);
         CandleHour preLastHour = lastHourCandles.get(1);
         if (lastHour.getEma20().compareTo(lastHour.getEma50()) < 0
-        && preLastHour.getEma20().compareTo(preLastHour.getEma50()) >= 0) {
+                && preLastHour.getEma20().compareTo(preLastHour.getEma50()) >= 0) {
             return true;
         }
         return false;

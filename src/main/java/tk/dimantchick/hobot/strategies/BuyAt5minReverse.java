@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import tk.dimantchick.hobot.domain.candles.Candle5min;
 import tk.dimantchick.hobot.domain.position.HobotPosition;
 
-
 import java.math.BigDecimal;
 
 /**
