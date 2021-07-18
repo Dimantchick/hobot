@@ -5,7 +5,6 @@ import tk.dimantchick.hobot.domain.position.HobotPosition;
 import tk.dimantchick.hobot.domain.position.PositionFilter;
 import tk.dimantchick.hobot.domain.position.PositionStatus;
 
-import javax.persistence.criteria.*;
 import java.math.BigDecimal;
 
 /**
@@ -14,107 +13,44 @@ import java.math.BigDecimal;
 public class PositionsSpecification {
     //ticker
     public static Specification<HobotPosition> byTickerLike(final String ticker) {
-        return new Specification<HobotPosition>() {
-            @Override
-            public Predicate toPredicate(Root<HobotPosition> root,
-                                         CriteriaQuery<?> criteriaQuery,
-                                         CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.like(
-                        criteriaBuilder.upper(criteriaBuilder.upper(root.get("instrument").get("ticker"))),
-                        String.format("%%%S%%", ticker));
-            }
-        };
+        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(
+                criteriaBuilder.upper(root.get("instrument").get("ticker")),
+                String.format("%%%S%%", ticker));
     }
 
     //status
     public static Specification<HobotPosition> byStatus(final PositionStatus status) {
         if (status == null) {
-            return new Specification<HobotPosition>() {
-                @Override
-                public Predicate toPredicate(Root<HobotPosition> root,
-                                             CriteriaQuery<?> criteriaQuery,
-                                             CriteriaBuilder criteriaBuilder) {
-                    return criteriaBuilder.isNotNull(root.get("status"));
-                }
-            };
+            return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.isNotNull(root.get("status"));
         } else {
-            return new Specification<HobotPosition>() {
-                @Override
-                public Predicate toPredicate(Root<HobotPosition> root,
-                                             CriteriaQuery<?> criteriaQuery,
-                                             CriteriaBuilder criteriaBuilder) {
-                    return criteriaBuilder.equal(root.get("status"), status);
-                }
-            };
+            return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("status"), status);
         }
     }
 
     //field BigDecimal
     public static Specification<HobotPosition> byFieldGreaterThan(final String name, final BigDecimal low) {
-        return new Specification<HobotPosition>() {
-            @Override
-            public Predicate toPredicate(Root<HobotPosition> root,
-                                         CriteriaQuery<?> criteriaQuery,
-                                         CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.greaterThanOrEqualTo(root.get(name), low);
-            }
-        };
+        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get(name), low);
     }
 
     public static Specification<HobotPosition> byFieldLessThan(final String name, final BigDecimal high) {
-        return new Specification<HobotPosition>() {
-            @Override
-            public Predicate toPredicate(Root<HobotPosition> root,
-                                         CriteriaQuery<?> criteriaQuery,
-                                         CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.lessThanOrEqualTo(root.get(name), high);
-            }
-        };
+        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get(name), high);
     }
 
     // field Integer
     public static Specification<HobotPosition> byFieldGreaterThan(final String name, final Integer low) {
-        return new Specification<HobotPosition>() {
-            @Override
-            public Predicate toPredicate(Root<HobotPosition> root,
-                                         CriteriaQuery<?> criteriaQuery,
-                                         CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.greaterThanOrEqualTo(root.get(name), low);
-            }
-        };
+        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get(name), low);
     }
 
     public static Specification<HobotPosition> byFieldLessThan(final String name, final Integer high) {
-        return new Specification<HobotPosition>() {
-            @Override
-            public Predicate toPredicate(Root<HobotPosition> root,
-                                         CriteriaQuery<?> criteriaQuery,
-                                         CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.lessThanOrEqualTo(root.get(name), high);
-            }
-        };
+        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get(name), high);
     }
 
     //field Boolean
     public static Specification<HobotPosition> byFieldBoolean(final String name, final Boolean value) {
         if (value == null) {
-            return new Specification<HobotPosition>() {
-                @Override
-                public Predicate toPredicate(Root<HobotPosition> root,
-                                             CriteriaQuery<?> criteriaQuery,
-                                             CriteriaBuilder criteriaBuilder) {
-                    return criteriaBuilder.isNotNull(root.get(name));
-                }
-            };
+            return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.isNotNull(root.get(name));
         } else {
-            return new Specification<HobotPosition>() {
-                @Override
-                public Predicate toPredicate(Root<HobotPosition> root,
-                                             CriteriaQuery<?> criteriaQuery,
-                                             CriteriaBuilder criteriaBuilder) {
-                    return criteriaBuilder.equal(root.get(name), value);
-                }
-            };
+            return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get(name), value);
         }
     }
 
@@ -125,6 +61,12 @@ public class PositionsSpecification {
                 and(PositionsSpecification.byFieldLessThan("priceToBuy", filter.getPriceToBuyHigh())).
                 and(PositionsSpecification.byFieldGreaterThan("priceSL", filter.getPriceSLLow())).
                 and(PositionsSpecification.byFieldLessThan("priceSL", filter.getPriceSLHigh())).
+                and(PositionsSpecification.byFieldGreaterThan("averageBuyPrice", filter.getAverageBuyPriceLow())).
+                and(PositionsSpecification.byFieldLessThan("averageBuyPrice", filter.getAverageBuyPriceHigh())).
+                and(PositionsSpecification.byFieldGreaterThan("averageSellPrice", filter.getAverageSellPriceLow())).
+                and(PositionsSpecification.byFieldLessThan("averageSellPrice", filter.getAverageSellPriceHigh())).
+                and(PositionsSpecification.byFieldGreaterThan("averageProfit", filter.getAverageProfitLow())).
+                and(PositionsSpecification.byFieldLessThan("averageProfit", filter.getAverageProfitHigh())).
                 and(PositionsSpecification.byFieldGreaterThan("quantity", filter.getQuantityLow())).
                 and(PositionsSpecification.byFieldLessThan("quantity", filter.getQuantityHigh())).
                 and(PositionsSpecification.byFieldGreaterThan("maxPosition", filter.getMaxPositionLow())).

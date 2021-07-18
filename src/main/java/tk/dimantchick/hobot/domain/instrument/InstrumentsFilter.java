@@ -132,7 +132,7 @@ public class InstrumentsFilter {
             onPage = 1000;
         }
         if (!sorts.contains(sort)) {
-            sort = "id";
+            sort = "ticker";
         }
     }
 }

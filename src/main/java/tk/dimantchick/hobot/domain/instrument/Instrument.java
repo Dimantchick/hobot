@@ -87,19 +87,6 @@ public class Instrument {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Instrument that = (Instrument) o;
-        return ticker.equals(that.ticker);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ticker);
-    }
-
     public synchronized List<Candle5min> getLast5MinCandles() {
         return last5MinCandles;
     }
@@ -126,5 +113,18 @@ public class Instrument {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Instrument that = (Instrument) o;
+        return Objects.equals(ticker, that.ticker) && Objects.equals(name, that.name) && Objects.equals(figi, that.figi);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ticker, name, figi);
     }
 }

@@ -57,8 +57,7 @@ public class HobotOperation {
     public HobotOperation(String id, Instrument instrument, HobotPosition position,
                           OperationStatus status, BigDecimal commission, Currency currency,
                           BigDecimal payment, BigDecimal price, Integer quantity,
-                          Integer quantityExecuted, /*InstrumentType instrumentType,*/
-                          OffsetDateTime operationDate, OperationTypeWithCommission operationType,
+                          Integer quantityExecuted, OffsetDateTime operationDate, OperationTypeWithCommission operationType,
                           boolean virtual) {
         this.id = id;
         this.instrument = instrument;

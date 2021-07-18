@@ -1,6 +1,5 @@
 package tk.dimantchick.hobot.domain.instrument.utils;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import tk.dimantchick.hobot.domain.instrument.Instrument;
@@ -14,8 +13,11 @@ import java.util.Optional;
 @Component
 public class StringToInstrumentConverter implements Converter<String, Instrument> {
 
-    @Autowired
-    private InstrumentsService instrumentsService;
+    private final InstrumentsService instrumentsService;
+
+    public StringToInstrumentConverter(InstrumentsService instrumentsService) {
+        this.instrumentsService = instrumentsService;
+    }
 
     @Override
     public Instrument convert(String s) {

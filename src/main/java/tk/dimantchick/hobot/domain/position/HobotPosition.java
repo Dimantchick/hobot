@@ -38,6 +38,10 @@ public class HobotPosition {
     private BigDecimal priceToBuy = BigDecimal.ZERO;
     private BigDecimal priceSL = BigDecimal.ZERO;
 
+    private BigDecimal averageBuyPrice = BigDecimal.ZERO;
+    private BigDecimal averageSellPrice = BigDecimal.ZERO;
+    private BigDecimal averageProfit = BigDecimal.ZERO;
+
     @OneToMany(cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable
@@ -61,7 +65,7 @@ public class HobotPosition {
     private boolean restart = true; // Пересоздавать позицию после закрытия
 
 
-    public BigDecimal getAverageBuyPrice() {
+    public BigDecimal countAverageBuyPrice() {
         BigDecimal sum = BigDecimal.ZERO;
         int num = 0;
         for (HobotOperation operation : operations) {
@@ -73,7 +77,7 @@ public class HobotPosition {
         return num > 0 ? sum.divide(BigDecimal.valueOf(num), RoundingMode.HALF_DOWN) : BigDecimal.ZERO;
     }
 
-    public BigDecimal getAverageSellPrice() {
+    public BigDecimal countAverageSellPrice() {
         BigDecimal sum = BigDecimal.ZERO;
         int num = 0;
         for (HobotOperation operation : operations) {
@@ -85,7 +89,7 @@ public class HobotPosition {
         return num > 0 ? sum.divide(BigDecimal.valueOf(num), RoundingMode.HALF_DOWN) : BigDecimal.ZERO;
     }
 
-    public BigDecimal getAverageProfit() {
+    public BigDecimal countAverageProfit() {
         BigDecimal sum = BigDecimal.ZERO;
         for (HobotOperation operation : operations) {
             if (operation.getOperationType() == OperationTypeWithCommission.BUY) {
@@ -98,6 +102,31 @@ public class HobotPosition {
             sum = sum.add(getLastPrice().subtract(getAverageBuyPrice()).multiply(BigDecimal.valueOf(quantity)));
         }
         return sum;
+    }
+
+    public BigDecimal getAverageBuyPrice() {
+        return averageBuyPrice;
+    }
+
+    public void setAverageBuyPrice(BigDecimal averageBuyPrice) {
+        this.averageBuyPrice = averageBuyPrice;
+    }
+
+    public BigDecimal getAverageSellPrice() {
+        return averageSellPrice;
+    }
+
+    public void setAverageSellPrice(BigDecimal averageSellPrice) {
+        this.averageSellPrice = averageSellPrice;
+    }
+
+    public BigDecimal getAverageProfit() {
+        averageProfit = countAverageProfit();
+        return averageProfit;
+    }
+
+    public void setAverageProfit(BigDecimal averageProfit) {
+        this.averageProfit = averageProfit;
     }
 
     public BigDecimal getLastPrice() {
@@ -157,6 +186,9 @@ public class HobotPosition {
         newList.add(operation);
         newList.addAll(operations);
         operations = newList;
+        averageBuyPrice = countAverageBuyPrice();
+        averageSellPrice = countAverageSellPrice();
+        averageProfit = countAverageProfit();
     }
 
     public int getQuantity() {

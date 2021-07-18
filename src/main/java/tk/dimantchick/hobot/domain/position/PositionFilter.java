@@ -11,18 +11,24 @@ import java.util.List;
  */
 public class PositionFilter {
 
-    private static final List<String> sorts = Arrays.asList(new String[]{"id", "instrument_ticker", "status", "priceToBuy", "priceSL", "quantity", "maxPosition", "virtual", "restart"});
+    private static final List<String> sorts = Arrays.asList(new String[]{"id", "instrument_ticker", "status", "priceToBuy", "priceSL", "averageBuyPrice", "averageSellPrice", "averageProfit", "quantity", "maxPosition", "virtual", "restart"});
 
     private String ticker = "";
     private PositionStatus status;
     private BigDecimal priceToBuyLow = BigDecimal.ZERO;
-    private BigDecimal priceToBuyHigh = BigDecimal.valueOf(Integer.MAX_VALUE);
+    private BigDecimal priceToBuyHigh = BigDecimal.valueOf(1000000);
     private BigDecimal priceSLLow = BigDecimal.ZERO;
-    private BigDecimal priceSLHigh = BigDecimal.valueOf(Integer.MAX_VALUE);
+    private BigDecimal priceSLHigh = BigDecimal.valueOf(1000000);
+    private BigDecimal averageBuyPriceLow = BigDecimal.ZERO;
+    private BigDecimal averageBuyPriceHigh = BigDecimal.valueOf(1000000);
+    private BigDecimal averageSellPriceLow = BigDecimal.ZERO;
+    private BigDecimal averageSellPriceHigh = BigDecimal.valueOf(1000000);
+    private BigDecimal averageProfitLow = BigDecimal.ZERO;
+    private BigDecimal averageProfitHigh = BigDecimal.valueOf(1000000);
     private int quantityLow = 0;
-    private int quantityHigh = Integer.MAX_VALUE;
+    private int quantityHigh = 1000000;
     private BigDecimal maxPositionLow = BigDecimal.ZERO;
-    private BigDecimal maxPositionHigh = BigDecimal.valueOf(Integer.MAX_VALUE);
+    private BigDecimal maxPositionHigh = BigDecimal.valueOf(1000000);
     private Boolean virtual;
     private Boolean restart;
     private int page = 1;
@@ -68,6 +74,54 @@ public class PositionFilter {
 
     public void setPriceSLLow(BigDecimal priceSLLow) {
         this.priceSLLow = priceSLLow;
+    }
+
+    public BigDecimal getAverageBuyPriceLow() {
+        return averageBuyPriceLow;
+    }
+
+    public void setAverageBuyPriceLow(BigDecimal averageBuyPriceLow) {
+        this.averageBuyPriceLow = averageBuyPriceLow;
+    }
+
+    public BigDecimal getAverageBuyPriceHigh() {
+        return averageBuyPriceHigh;
+    }
+
+    public void setAverageBuyPriceHigh(BigDecimal averageBuyPriceHigh) {
+        this.averageBuyPriceHigh = averageBuyPriceHigh;
+    }
+
+    public BigDecimal getAverageSellPriceLow() {
+        return averageSellPriceLow;
+    }
+
+    public void setAverageSellPriceLow(BigDecimal averageSellPriceLow) {
+        this.averageSellPriceLow = averageSellPriceLow;
+    }
+
+    public BigDecimal getAverageSellPriceHigh() {
+        return averageSellPriceHigh;
+    }
+
+    public void setAverageSellPriceHigh(BigDecimal averageSellPriceHigh) {
+        this.averageSellPriceHigh = averageSellPriceHigh;
+    }
+
+    public BigDecimal getAverageProfitLow() {
+        return averageProfitLow;
+    }
+
+    public void setAverageProfitLow(BigDecimal averageProfitLow) {
+        this.averageProfitLow = averageProfitLow;
+    }
+
+    public BigDecimal getAverageProfitHigh() {
+        return averageProfitHigh;
+    }
+
+    public void setAverageProfitHigh(BigDecimal averageProfitHigh) {
+        this.averageProfitHigh = averageProfitHigh;
     }
 
     public BigDecimal getPriceSLHigh() {
@@ -197,6 +251,12 @@ public class PositionFilter {
                 ", priceToBuyHigh=" + priceToBuyHigh +
                 ", priceSLLow=" + priceSLLow +
                 ", priceSLHigh=" + priceSLHigh +
+                ", averageBuyPriceLow=" + averageBuyPriceLow +
+                ", averageBuyPriceHigh=" + averageBuyPriceHigh +
+                ", averageSellPriceLow=" + averageSellPriceLow +
+                ", averageSellPriceHigh=" + averageSellPriceHigh +
+                ", averageProfitLow=" + averageProfitLow +
+                ", averageProfitHigh=" + averageProfitHigh +
                 ", quantityLow=" + quantityLow +
                 ", quantityHigh=" + quantityHigh +
                 ", maxPositionLow=" + maxPositionLow +

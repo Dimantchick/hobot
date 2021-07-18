@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Component
 public class StringToBigDecimalConverter implements Converter<String, BigDecimal> {
 
-    private static final BigDecimal MAX_BIG_DECIMAL = BigDecimal.valueOf(Integer.MAX_VALUE);
+    public static final BigDecimal MAX_BIG_DECIMAL = BigDecimal.valueOf(1000000);
 
     @Override
     public BigDecimal convert(String s) {

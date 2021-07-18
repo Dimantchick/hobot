@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.tinkoff.invest.openapi.model.rest.Currency;
 import tk.dimantchick.hobot.domain.instrument.Instrument;
 import tk.dimantchick.hobot.domain.instrument.InstrumentStatus;
 import tk.dimantchick.hobot.domain.instrument.InstrumentsFilter;
@@ -35,7 +34,8 @@ public class InstrumentsService {
         updateInstruments();
         logger.debug("fill all instruments");
         all = new HashMap<>();
-        Set<Instrument> instruments = activeInstruments;//getByCurrencyFromDB(Currency.USD);
+        //ToDo На время написания стоит активные инструменты. А так должен брать все. (долгая загрузка)
+        Set<Instrument> instruments = activeInstruments;//getAll();
         for (Instrument instrument : instruments) {
             all.put(instrument.getTicker(), instrument);
         }
@@ -48,22 +48,6 @@ public class InstrumentsService {
     public synchronized void updateInstruments() {
         logger.debug("load Active instruments");
         activeInstruments = instrumentRepository.findByStatusNot(InstrumentStatus.DISABLED);
-    }
-
-    public Iterable<Instrument> getAllFromDB() {
-        return instrumentRepository.findAll();
-    }
-
-    public Set<Instrument> getActiveFromDB() {
-        return instrumentRepository.findByStatusNot(InstrumentStatus.DISABLED);
-    }
-
-    public Set<Instrument> getByCurrencyFromDB(Currency currency) {
-        return instrumentRepository.findByCurrency(currency);
-    }
-
-    public List<Instrument> getByCurrencyFromDB(Currency currency, Pageable pageable) {
-        return instrumentRepository.findByCurrency(currency, pageable);
     }
 
     public synchronized void enable(Instrument instrument) {
@@ -93,11 +77,7 @@ public class InstrumentsService {
     }
 
     public Optional<Instrument> getByTicker(String ticker) {
-        return instrumentRepository.findByTicker(ticker);
-    }
-
-    public long countByCurrency(Currency currency) {
-        return instrumentRepository.countByCurrency(currency);
+        return instrumentRepository.findByTickerIgnoreCase(ticker);
     }
 
     public Page<Instrument> getByFilter(InstrumentsFilter filter, Pageable pageable) {

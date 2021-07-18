@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StringToIntegerConverter implements Converter<String, Integer> {
 
-    private static final int MAX_INT = Integer.MAX_VALUE;
+    public static final Integer MAX_INT = 1000000;
 
     @Override
     public Integer convert(String s) {

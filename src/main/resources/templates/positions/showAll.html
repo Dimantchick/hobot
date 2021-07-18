@@ -11,39 +11,48 @@
             text-align: left;
             vertical-align: top;
         }
+
         .ticker {
             width: 60px;
             text-align: left;
             vertical-align: top;
         }
+
         .status {
             width: 70px;
             vertical-align: top;
         }
+
         .low_high {
             width: 30px;
             vertical-align: top;
         }
+
         .virtual {
             width: 60px;
             vertical-align: top;
         }
+
         .restart {
             width: 60px;
             vertical-align: top;
         }
+
         .action {
             width: 120px;
             vertical-align: top;
         }
+
         .averageBuyPrice {
             width: 60px;
             vertical-align: top;
         }
+
         .averageSellPrice {
             width: 60px;
             vertical-align: top;
         }
+
         .averageProfit {
             width: 60px;
             vertical-align: top;
@@ -68,64 +77,123 @@
                 <tr>
                     <th data-priority="1" onclick="setSort('id')" class="headerlink">
                         <div th:if='${!filter.getSort().equals("id")}'>Id</div>
-                        <div th:if='${filter.getSort().equals("id") && filter.getSortDirection().isAscending()}'>Id ▲</div>
-                        <div th:if='${filter.getSort().equals("id") && filter.getSortDirection().isDescending()}'>Id ▼</div>
+                        <div th:if='${filter.getSort().equals("id") && filter.getSortDirection().isAscending()}'>Id ▲
+                        </div>
+                        <div th:if='${filter.getSort().equals("id") && filter.getSortDirection().isDescending()}'>Id ▼
+                        </div>
                     </th>
                     <th data-priority="2" onclick="setSort('instrument_ticker')" class="headerlink">
                         <div th:if='${!filter.getSort().equals("instrument_ticker")}'>Ticker</div>
-                        <div th:if='${filter.getSort().equals("instrument_ticker") && filter.getSortDirection().isAscending()}'>Ticker ▲</div>
-                        <div th:if='${filter.getSort().equals("instrument_ticker") && filter.getSortDirection().isDescending()}'>Ticker ▼</div>
+                        <div th:if='${filter.getSort().equals("instrument_ticker") && filter.getSortDirection().isAscending()}'>
+                            Ticker ▲
+                        </div>
+                        <div th:if='${filter.getSort().equals("instrument_ticker") && filter.getSortDirection().isDescending()}'>
+                            Ticker ▼
+                        </div>
                     </th>
                     <th data-priority="3" onclick="setSort('status')" class="headerlink">
                         <div th:if='${!filter.getSort().equals("status")}'>Status</div>
-                        <div th:if='${filter.getSort().equals("status") && filter.getSortDirection().isAscending()}'>Status ▲</div>
-                        <div th:if='${filter.getSort().equals("status") && filter.getSortDirection().isDescending()}'>Status ▼</div>
+                        <div th:if='${filter.getSort().equals("status") && filter.getSortDirection().isAscending()}'>
+                            Status ▲
+                        </div>
+                        <div th:if='${filter.getSort().equals("status") && filter.getSortDirection().isDescending()}'>
+                            Status ▼
+                        </div>
                     </th>
                     <th data-priority="4" onclick="setSort('priceToBuy')" class="headerlink">
                         <div th:if='${!filter.getSort().equals("priceToBuy")}'>priceToBuy</div>
-                        <div th:if='${filter.getSort().equals("priceToBuy") && filter.getSortDirection().isAscending()}'>priceToBuy ▲</div>
-                        <div th:if='${filter.getSort().equals("priceToBuy") && filter.getSortDirection().isDescending()}'>priceToBuy ▼</div>
+                        <div th:if='${filter.getSort().equals("priceToBuy") && filter.getSortDirection().isAscending()}'>
+                            priceToBuy ▲
+                        </div>
+                        <div th:if='${filter.getSort().equals("priceToBuy") && filter.getSortDirection().isDescending()}'>
+                            priceToBuy ▼
+                        </div>
                     </th>
                     <th data-priority="5" onclick="setSort('priceSL')" class="headerlink">
                         <div th:if='${!filter.getSort().equals("priceSL")}'>priceSL</div>
-                        <div th:if='${filter.getSort().equals("priceSL") && filter.getSortDirection().isAscending()}'>priceSL ▲</div>
-                        <div th:if='${filter.getSort().equals("priceSL") && filter.getSortDirection().isDescending()}'>priceSL ▼</div>
+                        <div th:if='${filter.getSort().equals("priceSL") && filter.getSortDirection().isAscending()}'>
+                            priceSL ▲
+                        </div>
+                        <div th:if='${filter.getSort().equals("priceSL") && filter.getSortDirection().isDescending()}'>
+                            priceSL ▼
+                        </div>
                     </th>
-                    <th data-priority="6">~BuyPrice</th>
-                    <th data-priority="7">~SellPrice</th>
-                    <th data-priority="8">~Profit</th>
+                    <th data-priority="6" onclick="setSort('averageBuyPrice')" class="headerlink">
+                        <div th:if='${!filter.getSort().equals("averageBuyPrice")}'>~BuyPrice</div>
+                        <div th:if='${filter.getSort().equals("averageBuyPrice") && filter.getSortDirection().isAscending()}'>
+                            ~BuyPrice ▲
+                        </div>
+                        <div th:if='${filter.getSort().equals("averageBuyPrice") && filter.getSortDirection().isDescending()}'>
+                            ~BuyPrice ▼
+                        </div>
+                    </th>
+                    <th data-priority="7" onclick="setSort('averageSellPrice')" class="headerlink">
+                        <div th:if='${!filter.getSort().equals("averageSellPrice")}'>~SellPrice</div>
+                        <div th:if='${filter.getSort().equals("averageSellPrice") && filter.getSortDirection().isAscending()}'>
+                            ~SellPrice ▲
+                        </div>
+                        <div th:if='${filter.getSort().equals("averageSellPrice") && filter.getSortDirection().isDescending()}'>
+                            ~SellPrice ▼
+                        </div>
+                    </th>
+                    <th data-priority="8" onclick="setSort('averageProfit')" class="headerlink">
+                        <div th:if='${!filter.getSort().equals("averageProfit")}'>~Profit</div>
+                        <div th:if='${filter.getSort().equals("averageProfit") && filter.getSortDirection().isAscending()}'>
+                            ~Profit ▲
+                        </div>
+                        <div th:if='${filter.getSort().equals("averageProfit") && filter.getSortDirection().isDescending()}'>
+                            ~Profit ▼
+                        </div>
+                    </th>
                     <th data-priority="9" onclick="setSort('quantity')" class="headerlink">
                         <div th:if='${!filter.getSort().equals("quantity")}'>quantity</div>
-                        <div th:if='${filter.getSort().equals("quantity") && filter.getSortDirection().isAscending()}'>quantity ▲</div>
-                        <div th:if='${filter.getSort().equals("quantity") && filter.getSortDirection().isDescending()}'>quantity ▼</div>
+                        <div th:if='${filter.getSort().equals("quantity") && filter.getSortDirection().isAscending()}'>
+                            quantity ▲
+                        </div>
+                        <div th:if='${filter.getSort().equals("quantity") && filter.getSortDirection().isDescending()}'>
+                            quantity ▼
+                        </div>
                     </th>
                     <th data-priority="10" onclick="setSort('maxPosition')" class="headerlink">
                         <div th:if='${!filter.getSort().equals("maxPosition")}'>maxPosition</div>
-                        <div th:if='${filter.getSort().equals("maxPosition") && filter.getSortDirection().isAscending()}'>maxPosition ▲</div>
-                        <div th:if='${filter.getSort().equals("maxPosition") && filter.getSortDirection().isDescending()}'>maxPosition ▼</div>
+                        <div th:if='${filter.getSort().equals("maxPosition") && filter.getSortDirection().isAscending()}'>
+                            maxPosition ▲
+                        </div>
+                        <div th:if='${filter.getSort().equals("maxPosition") && filter.getSortDirection().isDescending()}'>
+                            maxPosition ▼
+                        </div>
                     </th>
                     <th data-priority="11" onclick="setSort('virtual')" class="headerlink">
                         <div th:if='${!filter.getSort().equals("virtual")}'>Virt</div>
-                        <div th:if='${filter.getSort().equals("virtual") && filter.getSortDirection().isAscending()}'>Virt ▲</div>
-                        <div th:if='${filter.getSort().equals("virtual") && filter.getSortDirection().isDescending()}'>Virt ▼</div>
+                        <div th:if='${filter.getSort().equals("virtual") && filter.getSortDirection().isAscending()}'>
+                            Virt ▲
+                        </div>
+                        <div th:if='${filter.getSort().equals("virtual") && filter.getSortDirection().isDescending()}'>
+                            Virt ▼
+                        </div>
                     </th>
                     <th data-priority="12" onclick="setSort('restart')" class="headerlink">
                         <div th:if='${!filter.getSort().equals("restart")}'>Restart</div>
-                        <div th:if='${filter.getSort().equals("restart") && filter.getSortDirection().isAscending()}'>Restart ▲</div>
-                        <div th:if='${filter.getSort().equals("restart") && filter.getSortDirection().isDescending()}'>Restart ▼</div>
+                        <div th:if='${filter.getSort().equals("restart") && filter.getSortDirection().isAscending()}'>
+                            Restart ▲
+                        </div>
+                        <div th:if='${filter.getSort().equals("restart") && filter.getSortDirection().isDescending()}'>
+                            Restart ▼
+                        </div>
                     </th>
                     <th data-priority="13">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-<!-- filter form-->
+                <!-- filter form-->
                 <tr>
                     <td class="id"></td>
                     <td class="ticker"><input type="text" th:size="1" th:field="*{ticker}" class="ticker"></td>
                     <td class="status">
                         <select th:field="*{status}" class="status">
                             <option value=""
-                                    th:selected="${filter.isWithoutStatus()}">All</option>
+                                    th:selected="${filter.isWithoutStatus()}">All
+                            </option>
                             <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}"
                                     th:selected="${filter.getStatus() == s}"></option>
                         </select>
@@ -138,9 +206,18 @@
                         <input type="text" th:size="1" th:field="*{priceSLLow}" class="low_high">
                         <input type="text" th:size="1" th:field="*{priceSLHigh}" class="low_high">
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>
+                        <input type="text" th:size="1" th:field="*{averageBuyPriceLow}" class="low_high">
+                        <input type="text" th:size="1" th:field="*{averageBuyPriceHigh}" class="low_high">
+                    </td>
+                    <td>
+                        <input type="text" th:size="1" th:field="*{averageSellPriceLow}" class="low_high">
+                        <input type="text" th:size="1" th:field="*{averageSellPriceHigh}" class="low_high">
+                    </td>
+                    <td>
+                        <input type="text" th:size="1" th:field="*{averageProfitLow}" class="low_high">
+                        <input type="text" th:size="1" th:field="*{averageProfitHigh}" class="low_high">
+                    </td>
                     <td class="quantity">
                         <input type="text" th:size="1" th:field="*{quantityLow}" class="low_high">
                         <input type="text" th:size="1" th:field="*{quantityHigh}" class="low_high">
@@ -152,7 +229,8 @@
                     <td class="virtual">
                         <select th:field="*{virtual}" class="virtual">
                             <option value=""
-                                    th:selected="${filter.isWithoutVirtual()}">All</option>
+                                    th:selected="${filter.isWithoutVirtual()}">All
+                            </option>
                             <option th:value="true" th:text="true"
                                     th:selected="${filter.getVirtual() == true}"></option>
                             <option th:value="false" th:text="false"
@@ -162,7 +240,8 @@
                     <td class="restart">
                         <select th:field="*{restart}" class="restart">
                             <option value=""
-                                    th:selected="${filter.isWithoutRestart()}">All</option>
+                                    th:selected="${filter.isWithoutRestart()}">All
+                            </option>
                             <option th:value="true" th:text="true"
                                     th:selected="${filter.getRestart() == true}"></option>
                             <option th:value="false" th:text="false"
@@ -171,7 +250,7 @@
                     </td>
                     <td class="action"><input type="submit" th:value="Filter" class="action"></td>
                 </tr>
-<!--end filter form-->
+                <!--end filter form-->
                 <tr th:each="position : ${positions}">
                     <td class="id" th:text="${position.getId()}"></td>
                     <td class="ticker" th:text="${position.getInstrument().getTicker()}"></td>

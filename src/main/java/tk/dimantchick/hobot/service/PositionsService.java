@@ -110,7 +110,6 @@ public class PositionsService {
                                 logger.info("Placing buy order: buy " + lotsToBuy + " of " + position.getInstrument().getTicker());
                                 placeBuyOrder(lotsToBuy, position);
                             } else {
-                                //todo virtual buy
                                 String id = "virt" + OffsetDateTime.now();
                                 BigDecimal price = position.getLastPrice();
                                 logger.info("Virtual buy: buy " + lotsToBuy + "x" + price + " of " + position.getInstrument().getTicker());
@@ -121,7 +120,7 @@ public class PositionsService {
                                 position.addOperation(virtualOperation);
                                 position.setQuantity(lotsToBuy);
                                 position.setStatus(PositionStatus.BUYED);
-                                positionRepository.save(position);
+                                //positionRepository.save(position);
 
                             }
                         }
@@ -145,7 +144,6 @@ public class PositionsService {
                             logger.info("Placing sell order: sell " + position.getQuantity() + " of " + position.getInstrument().getTicker());
                             placeSellOrder(position.getQuantity(), position);
                         } else {
-                            //todo virtual sell
                             String id = "virt" + OffsetDateTime.now();
                             BigDecimal price = position.getLastPrice();
                             logger.info("Virtual sell: sell " + position.getQuantity() + "x" + price + " of " + position.getInstrument().getTicker());
@@ -156,12 +154,13 @@ public class PositionsService {
                             position.addOperation(virtualOperation);
                             position.setQuantity(0);
                             position.setStatus(PositionStatus.CLOSED);
-                            positionRepository.save(position);
+                            //positionRepository.save(position);
                         }
                     }
                     break;
             }
         }
+        positionRepository.saveAll(activePositions);
     }
 
     private void placeBuyOrder(int lots, HobotPosition position) {
@@ -169,7 +168,7 @@ public class PositionsService {
         if (placedLimitOrder != null) {
             position.setStatus(PositionStatus.BUYING);
             position.setPlacedLimitOrder(placedLimitOrder);
-            positionRepository.save(position);
+            //positionRepository.save(position);
         }
     }
 
@@ -178,7 +177,7 @@ public class PositionsService {
         if (placedLimitOrder != null) {
             position.setStatus(PositionStatus.SELLING);
             position.setPlacedLimitOrder(placedLimitOrder);
-            positionRepository.save(position);
+            //positionRepository.save(position);
         }
     }
 
@@ -207,7 +206,7 @@ public class PositionsService {
                             }
                             break;
                     }
-                    positionRepository.save(position);
+                    //positionRepository.save(position);
                     operationsService.save(operation);
                 } else if (operation.getStatus() == OperationStatus.DECLINE) {
                     position.setPlacedLimitOrder(null);
